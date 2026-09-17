@@ -18,7 +18,7 @@ Students and job seekers frequently apply to dozens of internships and job openi
 - **Full CRUD Operations**: Create, View, Edit, and Delete job applications with safety confirmation steps.
 - **Manual Form Processing**: Custom HTML forms built without Django Forms framework to demonstrate raw HTTP `request.POST` handling.
 - **Dual Validation**: HTML5 client-side attributes (`required`, `type="url"`, `type="date"`) paired with strict server-side validation in Django views.
-- **Responsive Bootstrap 5 UI**: Fully mobile-responsive table grids, stat cards, badges, and modal dialogs.
+- **Responsive Bootstrap 5 UI**: Fully mobile-responsive table grids, stat cards, badges, and safe confirmation workflows.
 - **Sample Data Generator**: Management command (`python manage.py populate_sample_data`) to quickly seed realistic test data.
 
 ## 4. Technology Stack

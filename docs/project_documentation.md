@@ -1,13 +1,9 @@
 # CareerTrack – Job & Internship Application Tracker Documentation
 
 ## 1. Problem Statement
-During active hiring seasons, students and job seekers apply to dozens or even hundreds of internships and full-time job openings across platforms like LinkedIn, Indeed, Glassdoor, Unstop, and individual company portals. Candidates struggle to track:
-- Which companies they have applied to.
-- The status of each application (Applied, Online Assessment, Interview, Selected, Rejected, Withdrawn).
-- Application deadlines and interview dates.
-- Specific job descriptions, role types, locations, and personal notes.
+During active hiring seasons, students and job seekers apply to dozens or even hundreds of internships and full-time job openings across platforms like LinkedIn, Indeed, Glassdoor, Unstop, and individual company portals. Candidates struggle to track which companies they have applied to, the status of each application, application dates, job details, locations, application links, and personal notes.
 
-Without a structured tracking tool, candidates risk missing online assessments, doubling applications, or failing to prepare adequately for upcoming interviews.
+Without a structured tracking tool, candidates risk doubling applications or losing track of ongoing interview processes.
 
 ---
 
@@ -19,7 +15,7 @@ Without a structured tracking tool, candidates risk missing online assessments, 
 ---
 
 ## 3. Proposed Solution
-**CareerTrack** provides a clean, single-tenant web application dashboard where candidates can manage their job application pipeline. It offers:
+**CareerTrack** provides a clean web application where candidates can manage their job application pipeline. It offers:
 - Aggregate dashboard counters for instant visibility into application progress.
 - Quick search and filter controls to isolate specific applications by status, job type, or work mode.
 - Full Create, Read, Update, and Delete (CRUD) capability.
