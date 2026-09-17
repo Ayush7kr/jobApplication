@@ -1,0 +1,121 @@
+{% extends 'applications/base.html' %}
+
+{% block title %}{{ application.company }} - {{ application.job_title }} | CareerTrack{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <!-- Navigation Header -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a href="{% url 'application_list' %}" class="btn btn-outline-secondary btn-sm">
+                <i class="bi bi-arrow-left me-1"></i> Back to Applications
+            </a>
+            <div class="btn-group btn-group-sm">
+                <a href="{% url 'application_update' application.pk %}" class="btn btn-primary">
+                    <i class="bi bi-pencil me-1"></i> Edit Application
+                </a>
+                <a href="{% url 'application_delete' application.pk %}" class="btn btn-outline-danger">
+                    <i class="bi bi-trash me-1"></i> Delete
+                </a>
+            </div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="h4 font-weight-bold mb-0 text-dark">{{ application.company }}</h3>
+                    <p class="text-muted mb-0 font-weight-medium">{{ application.job_title }}</p>
+                </div>
+                <div>
+                    {% if application.status == 'Applied' %}
+                        <span class="badge-status badge-status-applied fs-6">Applied</span>
+                    {% elif application.status == 'Online Assessment' %}
+                        <span class="badge-status badge-status-oa fs-6">Online Assessment</span>
+                    {% elif application.status == 'Interview' %}
+                        <span class="badge-status badge-status-interview fs-6">Interview</span>
+                    {% elif application.status == 'Selected' %}
+                        <span class="badge-status badge-status-selected fs-6">Selected</span>
+                    {% elif application.status == 'Rejected' %}
+                        <span class="badge-status badge-status-rejected fs-6">Rejected</span>
+                    {% else %}
+                        <span class="badge-status badge-status-withdrawn fs-6">Withdrawn</span>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-body p-4">
+                <div class="row g-4">
+                    <!-- Job Type -->
+                    <div class="col-6 col-sm-4">
+                        <div class="text-muted small fw-semibold text-uppercase">Job Type</div>
+                        <div class="fw-semibold text-dark fs-6 mt-1">
+                            <i class="bi bi-tag text-primary me-1"></i>{{ application.job_type }}
+                        </div>
+                    </div>
+
+                    <!-- Application Date -->
+                    <div class="col-6 col-sm-4">
+                        <div class="text-muted small fw-semibold text-uppercase">Applied On</div>
+                        <div class="fw-semibold text-dark fs-6 mt-1">
+                            <i class="bi bi-calendar-event text-primary me-1"></i>{{ application.application_date|date:"F d, Y" }}
+                        </div>
+                    </div>
+
+                    <!-- Work Mode -->
+                    <div class="col-6 col-sm-4">
+                        <div class="text-muted small fw-semibold text-uppercase">Work Mode</div>
+                        <div class="fw-semibold text-dark fs-6 mt-1">
+                            <i class="bi bi-laptop text-primary me-1"></i>{{ application.work_mode }}
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="col-6 col-sm-4">
+                        <div class="text-muted small fw-semibold text-uppercase">Location</div>
+                        <div class="fw-semibold text-dark fs-6 mt-1">
+                            <i class="bi bi-geo-alt text-primary me-1"></i>
+                            {% if application.location %}{{ application.location }}{% else %}<span class="text-muted fw-normal">Not specified</span>{% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Direct Application URL -->
+                    <div class="col-12 col-sm-8">
+                        <div class="text-muted small fw-semibold text-uppercase">Application Link</div>
+                        <div class="mt-1">
+                            {% if application.application_url %}
+                                <a href="{{ application.application_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i> Open Application Link
+                                </a>
+                            {% else %}
+                                <span class="text-muted small">No URL provided</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="my-4 text-muted">
+
+                <!-- Notes Section -->
+                <div>
+                    <h5 class="h6 font-weight-bold text-dark mb-2">
+                        <i class="bi bi-journal-text text-primary me-1"></i> Notes &amp; Activity Log
+                    </h5>
+                    {% if application.notes %}
+                        <div class="p-3 bg-light rounded border text-secondary" style="white-space: pre-line;">
+                            {{ application.notes }}
+                        </div>
+                    {% else %}
+                        <p class="text-muted small italic mb-0">No notes recorded for this application.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card-footer bg-light py-2 text-muted small d-flex justify-content-between">
+                <span>Created: {{ application.created_at|date:"M d, Y H:i" }}</span>
+                <span>Last Updated: {{ application.updated_at|date:"M d, Y H:i" }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

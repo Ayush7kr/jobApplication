@@ -1,0 +1,25 @@
+# Python / Byte-compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables & secrets
+.env
+.env.local
+*.env
+
+# SQLite Database (optional - keep or ignore depending on user preference, but pycache/venv/env are explicitly ignored)
+*.sqlite3-journal
+
+# IDE & OS cache
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

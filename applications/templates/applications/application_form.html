@@ -1,0 +1,200 @@
+{% extends 'applications/base.html' %}
+
+{% block title %}{{ title }} - CareerTrack{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+        <!-- Form Header -->
+        <div class="d-flex align-items-center justify-content-between mb-3">
+            <div>
+                <h2 class="h3 font-weight-bold mb-1">{{ title }}</h2>
+                <p class="text-muted small mb-0">Fill in the application details below. Fields marked with <span class="required-star">*</span> are required.</p>
+            </div>
+            {% if is_edit %}
+                <a href="{% url 'application_detail' application.pk %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-x-lg me-1"></i> Cancel
+                </a>
+            {% else %}
+                <a href="{% url 'application_list' %}" class="btn btn-outline-secondary btn-sm">
+                    <i class="bi bi-x-lg me-1"></i> Cancel
+                </a>
+            {% endif %}
+        </div>
+
+        <!-- Manual HTML Form Card -->
+        <div class="card shadow-sm border-0 mb-4">
+            <div class="card-body p-4">
+                <form method="POST" action="{% if is_edit %}{% url 'application_update' application.pk %}{% else %}{% url 'application_create' %}{% endif %}" novalidate>
+                    {% csrf_token %}
+
+                    <div class="row g-3">
+                        <!-- Company Name -->
+                        <div class="col-12 col-md-6">
+                            <label for="company" class="form-label fw-semibold">
+                                Company Name <span class="required-star">*</span>
+                            </label>
+                            <input type="text"
+                                   name="company"
+                                   id="company"
+                                   class="form-control {% if errors.company %}is-invalid{% endif %}"
+                                   placeholder="e.g. Google, Amazon, Microsoft"
+                                   value="{{ form_data.company|default:'' }}"
+                                   required
+                                   maxlength="100">
+                            {% if errors.company %}
+                                <div class="invalid-feedback d-block">{{ errors.company }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Job Title -->
+                        <div class="col-12 col-md-6">
+                            <label for="job_title" class="form-label fw-semibold">
+                                Job Title / Role <span class="required-star">*</span>
+                            </label>
+                            <input type="text"
+                                   name="job_title"
+                                   id="job_title"
+                                   class="form-control {% if errors.job_title %}is-invalid{% endif %}"
+                                   placeholder="e.g. Software Engineer Intern"
+                                   value="{{ form_data.job_title|default:'' }}"
+                                   required
+                                   maxlength="150">
+                            {% if errors.job_title %}
+                                <div class="invalid-feedback d-block">{{ errors.job_title }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Application Date -->
+                        <div class="col-12 col-md-4">
+                            <label for="application_date" class="form-label fw-semibold">
+                                Application Date <span class="required-star">*</span>
+                            </label>
+                            <input type="date"
+                                   name="application_date"
+                                   id="application_date"
+                                   class="form-control {% if errors.application_date %}is-invalid{% endif %}"
+                                   value="{{ form_data.application_date|default:'' }}"
+                                   required>
+                            {% if errors.application_date %}
+                                <div class="invalid-feedback d-block">{{ errors.application_date }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Job Type -->
+                        <div class="col-12 col-md-4">
+                            <label for="job_type" class="form-label fw-semibold">
+                                Job Type <span class="required-star">*</span>
+                            </label>
+                            <select name="job_type"
+                                    id="job_type"
+                                    class="form-select {% if errors.job_type %}is-invalid{% endif %}"
+                                    required>
+                                {% for code, label in job_type_choices %}
+                                    <option value="{{ code }}" {% if form_data.job_type == code %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if errors.job_type %}
+                                <div class="invalid-feedback d-block">{{ errors.job_type }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Work Mode -->
+                        <div class="col-12 col-md-4">
+                            <label for="work_mode" class="form-label fw-semibold">
+                                Work Mode <span class="required-star">*</span>
+                            </label>
+                            <select name="work_mode"
+                                    id="work_mode"
+                                    class="form-select {% if errors.work_mode %}is-invalid{% endif %}"
+                                    required>
+                                {% for code, label in work_mode_choices %}
+                                    <option value="{{ code }}" {% if form_data.work_mode == code %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if errors.work_mode %}
+                                <div class="invalid-feedback d-block">{{ errors.work_mode }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-12 col-md-6">
+                            <label for="status" class="form-label fw-semibold">
+                                Application Status <span class="required-star">*</span>
+                            </label>
+                            <select name="status"
+                                    id="status"
+                                    class="form-select {% if errors.status %}is-invalid{% endif %}"
+                                    required>
+                                {% for code, label in status_choices %}
+                                    <option value="{{ code }}" {% if form_data.status == code %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if errors.status %}
+                                <div class="invalid-feedback d-block">{{ errors.status }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Location -->
+                        <div class="col-12 col-md-6">
+                            <label for="location" class="form-label fw-semibold">Location</label>
+                            <input type="text"
+                                   name="location"
+                                   id="location"
+                                   class="form-control {% if errors.location %}is-invalid{% endif %}"
+                                   placeholder="e.g. Bangalore, Hyderabad, Remote"
+                                   value="{{ form_data.location|default:'' }}"
+                                   maxlength="100">
+                            {% if errors.location %}
+                                <div class="invalid-feedback d-block">{{ errors.location }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Application URL -->
+                        <div class="col-12">
+                            <label for="application_url" class="form-label fw-semibold">Application URL</label>
+                            <input type="url"
+                                   name="application_url"
+                                   id="application_url"
+                                   class="form-control {% if errors.application_url %}is-invalid{% endif %}"
+                                   placeholder="https://careers.company.com/job/123"
+                                   value="{{ form_data.application_url|default:'' }}">
+                            {% if errors.application_url %}
+                                <div class="invalid-feedback d-block">{{ errors.application_url }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="col-12">
+                            <label for="notes" class="form-label fw-semibold">Notes / Details</label>
+                            <textarea name="notes"
+                                      id="notes"
+                                      rows="4"
+                                      class="form-control {% if errors.notes %}is-invalid{% endif %}"
+                                      placeholder="Add interview stages, contact recruiter details, prep notes, etc.">{{ form_data.notes|default:'' }}</textarea>
+                            {% if errors.notes %}
+                                <div class="invalid-feedback d-block">{{ errors.notes }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Form Action Buttons -->
+                    <div class="d-flex justify-content-end gap-2 mt-4 pt-3 border-top">
+                        {% if is_edit %}
+                            <a href="{% url 'application_detail' application.pk %}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-save me-1"></i> Save Changes
+                            </button>
+                        {% else %}
+                            <a href="{% url 'application_list' %}" class="btn btn-outline-secondary">Cancel</a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="bi bi-plus-circle me-1"></i> Add Application
+                            </button>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
