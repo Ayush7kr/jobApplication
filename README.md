@@ -77,6 +77,14 @@ careertrack/
 ├── README.md                   # Primary project documentation
 ├── db.sqlite3                  # SQLite database
 │
+├── screenshots/                # Application UI screenshots
+│   ├── Screenshot 2026-09-18 132915.png  # Application Dashboard
+│   ├── Screenshot 2026-09-18 132928.png  # Application Records & Filter
+│   ├── Screenshot 2026-09-18 132938.png  # Add Application Form
+│   ├── Screenshot 2026-09-18 133006.png  # Application Details View
+│   ├── Screenshot 2026-09-18 133023.png  # Delete Confirmation Dialog
+│   └── Screenshot 2026-09-18 133035.png  # Success Flash Alert
+│
 ├── careertrack/                # Core Django configuration
 │   ├── __init__.py
 │   ├── settings.py
@@ -111,7 +119,43 @@ careertrack/
     └── project_documentation.md # Technical screening documentation
 ```
 
-## 8. Installation Instructions
+## 8. Application Screenshots
+
+### 1. Dashboard Overview
+Overview of application status counters (Total, Applied, OA, Interviews, Selected, Rejected) and recent application records table.
+![Application Dashboard](screenshots/Screenshot%202026-09-18%20132915.png)
+
+---
+
+### 2. Application Directory & Filtering
+Full application directory with live keyword search and multi-dropdown filters (Status, Job Type, Work Mode).
+![Application Records](screenshots/Screenshot%202026-09-18%20132928.png)
+
+---
+
+### 3. Add Job Application Form
+Clean manual HTML input form for adding new job/internship applications with client and server-side validation.
+![Add Job Application Form](screenshots/Screenshot%202026-09-18%20132938.png)
+
+---
+
+### 4. Application Details View
+Comprehensive detail card displaying position metadata, direct application URL link, timestamps, and formatted notes.
+![Application Details View](screenshots/Screenshot%202026-09-18%20133006.png)
+
+---
+
+### 5. Safe Delete Confirmation Workflow
+Dedicated deletion confirmation page preventing accidental data loss before executing POST removal.
+![Delete Confirmation](screenshots/Screenshot%202026-09-18%20133023.png)
+
+---
+
+### 6. Dynamic Flash Notification Alert
+Instant feedback banner alert notifying users of successful database actions.
+![Flash Alert Notification](screenshots/Screenshot%202026-09-18%20133035.png)
+
+## 9. Installation Instructions
 1. **Clone or navigate to repository directory**:
    ```bash
    cd f:/screening_task
@@ -121,7 +165,7 @@ careertrack/
    python -m pip install -r requirements.txt
    ```
 
-## 9. How to Run Locally
+## 10. How to Run Locally
 1. **Apply Database Migrations**:
    ```bash
    python manage.py makemigrations
@@ -142,25 +186,26 @@ careertrack/
 5. **Open Application in Browser**:
    Navigate to `http://127.0.0.1:8000/`.
 
-## 10. CRUD Implementation Summary
+## 11. CRUD Implementation Summary
 - **Create**: Route `/applications/add/` processes `request.POST` data manually, runs server-side validation, and executes `JobApplication.objects.create()`.
 - **Read**: Route `/` displays summary statistics and recent entries. Route `/applications/` lists all records with filtering and search (`Q` objects). Route `/applications/<id>/` displays a detailed single record card.
 - **Update**: Route `/applications/<id>/edit/` pre-populates existing model values in HTML form controls and updates fields via `instance.save()`.
 - **Delete**: Route `/applications/<id>/delete/` presents a GET confirmation page and executes safe POST deletion via `instance.delete()`.
 
-## 11. Validation Approach
+## 12. Validation Approach
 - **Client-Side Validation**: Enforced directly in browser HTML using attributes `required`, `maxlength="100"`, `type="date"`, and `type="url"`.
 - **Server-Side Validation**: Handled in Python inside `_validate_application_data(data)` within `views.py`. Checks non-emptiness of required fields, string length bounds, valid date parsing (`strptime`), choice membership, and valid URL structure (`URLValidator`). If validation fails, errors are returned to the template along with submitted values to preserve user input.
 
-## 12. Challenges Faced
+## 13. Challenges Faced
 - **Manual Form Handling without Django Forms**: Extracting, sanitizing, validating, and re-rendering field errors without `forms.py` required writing a dedicated validation helper (`_validate_application_data`) and carefully wiring form `value` attributes in HTML.
 - **Dynamic Status Metrics**: Aggregating distinct application statuses efficiently using Django ORM `.filter(status=...).count()`.
 
-## 13. Future Scope
+## 14. Future Scope
 - User authentication and multi-user data isolation.
 - Automated email and calendar notifications for upcoming interviews or OA deadlines.
 - Resume/CV upload attachment linked to each application.
 - Advanced visual analytics (application response rates, timeline charts).
 
-## 14. Why This Solution Was Chosen
+## 15. Why This Solution Was Chosen
 Choosing Django with SQLite and Bootstrap 5 provided a clean, robust, and readable architectural stack. By maintaining zero complex frontend build steps (npm, webpack, node_modules), the project is lightweight, portable, easy to audit, and instantly runnable for interview evaluation.
+
